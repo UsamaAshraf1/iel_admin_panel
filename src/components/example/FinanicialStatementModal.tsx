@@ -163,7 +163,6 @@ export default function FinancialStatementModal({ setValue }:ModalProps) {
             />
           </div>
 
-          {/* Buttons */}
           <div className="flex items-center justify-end gap-3 mt-6">
             <Button
               variant="outline"
