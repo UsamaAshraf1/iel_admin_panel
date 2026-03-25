@@ -5,17 +5,21 @@ import ComponentCard from "../common/ComponentCard";
 import Button from "../ui/button/Button";
 import { Modal } from "../ui/modal";
 import Label from "../form/Label";
-import Input from "../form/input/InputField";
+// import Input from "../form/input/InputField";
 import { useModal } from "@/hooks/useModal";
 import supabase from "../../../SupabaseConfig";
 import { toast } from "sonner";
 import TextArea from "../form/input/TextArea";
 
-export default function NewsModal({ setValue }) {
+interface ModalProps {
+  setValue: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
+}
+export default function NewsModal({ setValue }:ModalProps) {
   const { isOpen, openModal, closeModal } = useModal();
 
   const [shortDes, setShortDes] = useState("");
-  const [pdfFile, setPdfFile] = useState(null);
+  // const [pdfFile, setPdfFile] = useState(null);
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleUpload = async () => {
@@ -42,6 +46,8 @@ export default function NewsModal({ setValue }) {
         return;
       }
 
+      console.log(uploadData)
+
       // Get public URL
       const { data: publicUrlData } = supabase.storage
         .from("PDF Files")
@@ -66,7 +72,7 @@ export default function NewsModal({ setValue }) {
         setShortDes("");
         setPdfFile(null);
 
-        setValue((prev) => !prev); // refresh table
+        setValue(true); // refresh table
         closeModal();
       }
     } catch (err) {
@@ -104,7 +110,7 @@ export default function NewsModal({ setValue }) {
              <input
               type="file"
               accept="pdf/*"
-              onChange={(e) => setPdfFile(e.target.files[0])}
+              onChange={(e) => setPdfFile(e.target.files?.[0] || null)}
               disabled={loading}
               className="w-full text-sm text-gray-600"
               required
@@ -122,9 +128,9 @@ export default function NewsModal({ setValue }) {
           <div className="flex items-center justify-end gap-3 mt-6">
            
 
-            <Button variant="outline" onClick={closeModal}  type="button"
+            <Button variant="outline" onClick={closeModal} 
               size="sm"
-              variant="outline">
+             >
               Cancel
             </Button>
              <Button  onClick={handleUpload} disabled={loading}>

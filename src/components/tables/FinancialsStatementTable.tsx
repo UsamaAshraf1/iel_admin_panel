@@ -8,13 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import Badge from "../ui/badge/Badge";
+// import Badge from "../ui/badge/Badge";
 import Button from "../ui/button/Button";
 import supabase from "../../../SupabaseConfig";
 import { toast } from "sonner"; // Optional: for nice notifications (recommended)
 import { Modal } from "../ui/modal";
 import Label from "../form/Label";
-import Input from "../form/input/InputField";
+// import Input from "../form/input/InputField";
 import TextArea from "../form/input/TextArea";
 
 const FINANCIAL_TABS = [
@@ -26,14 +26,18 @@ const FINANCIAL_TABS = [
 ];
 
 interface Profile {
-  id:  Number| string;
+  id:  number| string;
   short_des:  string;
   pdf: string;
   tab: string;
  
 }
 
-export default function FinancialStatementTable({value, setValue}) {
+interface ModalProps {
+  setValue: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
+  value: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
+}
+export default function FinancialStatementTable({value, setValue}:ModalProps) {
   const [BlogsData, setBlogsData] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +48,8 @@ export default function FinancialStatementTable({value, setValue}) {
     
     const [editshortdesc, seteditshortdesc] = useState("");
     const [edittabtitle, setedittabtitle] = useState("");
-    const [editpdf, seteditpdf] = useState(null);
+    // const [editpdf, seteditpdf] = useState(null);
+    const [editpdf, seteditpdf] = useState<File | null>(null);;
 
   useEffect(() => {
     async function fetchBlogs() {
@@ -61,7 +66,7 @@ export default function FinancialStatementTable({value, setValue}) {
      
 
         setBlogsData(data);
-      } catch (err: any) {
+      } catch (err) {
         console.error("Error fetching profiles:", err);
         setError("Failed to load data. Please try again later.");
       } finally {
@@ -88,7 +93,7 @@ export default function FinancialStatementTable({value, setValue}) {
       setBlogsData((prev) => prev.filter((item) => item.id !== id));
 
       toast.success("Record deleted successfully");
-    } catch (err: any) {
+    } catch (err) {
       console.error("Delete error:", err);
       toast.error("Failed to delete record");
     }
@@ -322,7 +327,7 @@ const handleUpdate = async (e: React.FormEvent) => {
         <input
               type="file"
               accept="pdf/*"
-              onChange={(e) => seteditpdf(e.target.files[0])}
+              onChange={(e) => seteditpdf(e.target.files?.[0] || null)}
               disabled={loading}
               className="w-full text-sm text-gray-600"
             />
@@ -331,7 +336,6 @@ const handleUpdate = async (e: React.FormEvent) => {
     <div className="flex justify-end gap-3">
 
       <Button
-        type="button"
         variant="outline"
         onClick={() => setIsEditOpen(false)}
       >
@@ -339,7 +343,6 @@ const handleUpdate = async (e: React.FormEvent) => {
       </Button>
 
       <Button
-        type="submit"
         className="bg-brand-500 text-white"
       >
         Update

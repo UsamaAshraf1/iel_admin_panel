@@ -8,12 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import Badge from "../ui/badge/Badge";
+// import Badge from "../ui/badge/Badge";
 import supabase from "../../../SupabaseConfig";
-import { toast } from "sonner"; // Optional: for nice notifications (recommended)
+// import { toast } from "sonner";
 
 interface Profile {
-  id:  Number| string;
+  id:  number| string;
   full_name:  string;
   email: string;
   phone: string;
@@ -41,7 +41,7 @@ export default function ContactTable() {
      
 
         setcontactData(data);
-      } catch (err: any) {
+      } catch (err) {
         console.error("Error fetching profiles:", err);
         setError("Failed to load data. Please try again later.");
       } finally {

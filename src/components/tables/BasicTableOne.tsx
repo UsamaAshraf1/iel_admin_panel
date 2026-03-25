@@ -10,7 +10,7 @@ import {
 } from "../ui/table";
 import Badge from "../ui/badge/Badge";
 import supabase from "../../../SupabaseConfig";
-import { toast } from "sonner"; // Optional: for nice notifications (recommended)
+// import { toast } from "sonner"; 
 
 interface Profile {
   id: number | string;
@@ -45,7 +45,7 @@ export default function BasicTableOne() {
         );
 
         setProfiles(filteredData);
-      } catch (err: any) {
+      } catch (err) {
         console.error("Error fetching profiles:", err);
         setError("Failed to load data. Please try again later.");
       } finally {
@@ -79,7 +79,7 @@ export default function BasicTableOne() {
 
       // Optional: Show success toast
       // toast.success(`User ${newBlockStatus ? "blocked" : "unblocked"} successfully`);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error updating block status:", err);
 
       // Revert optimistic update on error
@@ -186,12 +186,16 @@ export default function BasicTableOne() {
                     <button
                       onClick={() => toggleBlockStatus(profile)}
                       disabled={updatingId === profile.id}
-                      className="focus:outline-none"
+                      className={`focus:outline-none transition-all ${
+    updatingId === profile.id 
+      ? "opacity-50 cursor-not-allowed" 
+      : "cursor-pointer hover:opacity-80"
+  }`}
                     >
                       <Badge
                         size="sm"
                         color={profile.block ? "error" : "success"}
-                        className={updatingId === profile.id ? "opacity-50" : "cursor-pointer hover:opacity-80 transition"}
+                        // className={updatingId === profile.id ? "opacity-50" : "cursor-pointer hover:opacity-80 transition"}
                       >
                         {updatingId === profile.id
                           ? "Updating..."

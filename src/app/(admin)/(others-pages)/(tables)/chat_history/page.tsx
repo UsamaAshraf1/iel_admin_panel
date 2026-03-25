@@ -1,5 +1,4 @@
 import ComponentCard from "@/components/common/ComponentCard";
-import BasicTableOne from "@/components/tables/BasicTableOne";
 import ChatTable from "@/components/tables/ChatTable";
 import { Metadata } from "next";
 import React from "react";

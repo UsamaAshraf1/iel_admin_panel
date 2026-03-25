@@ -16,14 +16,19 @@ import supabase from "../../../SupabaseConfig";
 import { toast } from "sonner"; // Optional: for nice notifications (recommended)
 
 interface Profile {
-  id:  Number| string;
+  id:  number| string;
   title:  string;
   img: string;
   desc: string;
  
 }
 
-export default function BlogsTable({value,setValue}) {
+interface ModalProps {
+  setValue: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
+  value: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function BlogsTable({value,setValue}:ModalProps) {
   const [BlogsData, setBlogsData] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +55,7 @@ const [editImage, setEditImage] = useState<File | null>(null);
      
 
         setBlogsData(data);
-      } catch (err: any) {
+      } catch (err) {
         console.error("Error fetching profiles:", err);
         setError("Failed to load data. Please try again later.");
       } finally {
@@ -77,7 +82,7 @@ const [editImage, setEditImage] = useState<File | null>(null);
       setBlogsData((prev) => prev.filter((item) => item.id !== id));
 
       toast.success("Record deleted successfully");
-    } catch (err: any) {
+    } catch (err) {
       console.error("Delete error:", err);
       toast.error("Failed to delete record");
     }
@@ -300,7 +305,6 @@ const handleUpdate = async (e: React.FormEvent) => {
     <div className="flex justify-end gap-3">
 
       <Button
-        type="button"
         variant="outline"
         onClick={() => setIsEditOpen(false)}
       >
@@ -308,7 +312,6 @@ const handleUpdate = async (e: React.FormEvent) => {
       </Button>
 
       <Button
-        type="submit"
         className="bg-brand-500 text-white"
       >
         Update

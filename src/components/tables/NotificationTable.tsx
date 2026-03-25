@@ -17,7 +17,10 @@ interface Notification {
   created_at?: string; // optional, if you have timestamp
 }
 
-export default function NotificationTable({value}) {
+interface ModalProps {
+  value: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
+}
+export default function NotificationTable({value}:ModalProps) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +38,7 @@ export default function NotificationTable({value}) {
         if (error) throw error;
 
         setNotifications(data || []);
-      } catch (err: any) {
+      } catch (err) {
         console.error("Error fetching notifications:", err);
         setError("Failed to load notifications. Please try again later.");
       } finally {

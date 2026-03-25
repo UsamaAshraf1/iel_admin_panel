@@ -1,6 +1,6 @@
 "use client";
 
-import Footer from "@/components/footer/Footer";
+// import Footer from "@/components/footer/Footer";
 import { useSidebar } from "@/context/SidebarContext";
 import AppHeader from "@/layout/AppHeader";
 import AppSidebar from "@/layout/AppSidebar";

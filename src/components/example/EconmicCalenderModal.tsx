@@ -9,7 +9,11 @@ import Input from "../form/input/InputField";
 import { useModal } from "@/hooks/useModal";
 import supabase from "../../../SupabaseConfig";
 
-export default function EconomicModal({setValue}) {
+interface EconmicCalenderModalProps {
+  setValue: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function EconomicModal({setValue}:EconmicCalenderModalProps) {
   const { isOpen, openModal, closeModal } = useModal();
 
   const [symbol, setSymbol] = useState("");
@@ -49,8 +53,16 @@ export default function EconomicModal({setValue}) {
       setValue(true)
       handleClose();
 
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
+    } catch (err) {
+         let errorMessage = "Something went wrong";
+
+  if (err instanceof Error) {
+    errorMessage = err.message;
+  } else if (err && typeof err === "object" && "message" in err) {
+    // Handle Supabase/Postgrest/Storage errors that are plain objects
+    errorMessage = (err as { message: string }).message;
+  }
+  setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -109,7 +121,6 @@ export default function EconomicModal({setValue}) {
           {/* Buttons */}
           <div className="flex items-center justify-end gap-3 mt-6">
             <Button
-              type="button"
               size="sm"
               variant="outline"
               onClick={handleClose}
@@ -119,7 +130,6 @@ export default function EconomicModal({setValue}) {
             </Button>
 
             <Button
-              type="submit"
               size="sm"
               disabled={loading}
               className="bg-brand-500 hover:bg-brand-600 text-white"

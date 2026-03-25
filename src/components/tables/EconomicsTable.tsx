@@ -22,7 +22,11 @@ interface Profile {
   date: string;
 }
 
-export default function EconomicTable({ value }) {
+interface ModalProps {
+  value: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function EconomicTable({ value }:ModalProps) {
   const [economicCalender, seteconomicCalender] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +51,7 @@ export default function EconomicTable({ value }) {
         if (error) throw error;
 
         seteconomicCalender(data || []);
-      } catch (err: any) {
+      } catch (err) {
         console.error("Error fetching data:", err);
         setError("Failed to load data. Please try again later.");
       } finally {
@@ -245,7 +249,6 @@ const handleEdit = (item: Profile) => {
               type="text"
               defaultValue={symbol}
               onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-              required
             />
           </div>
 
@@ -255,13 +258,11 @@ const handleEdit = (item: Profile) => {
               type="date"
               defaultValue={date}
               onChange={(e) => setDate(e.target.value)}
-              required
             />
           </div>
 
           <div className="flex justify-end gap-3">
             <Button
-              type="button"
               variant="outline"
               onClick={closeModal}
             >
@@ -269,7 +270,6 @@ const handleEdit = (item: Profile) => {
             </Button>
 
             <Button
-              type="submit"
               className="bg-brand-500 hover:bg-brand-600 text-white"
               disabled={saving}
             >

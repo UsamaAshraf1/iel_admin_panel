@@ -5,24 +5,24 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
-  BoxCubeIcon,
+  // BoxCubeIcon,
   CalenderIcon,
   ChevronDownIcon,
-  GridIcon,
+  // GridIcon,
   HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
-  PlugInIcon,
+  // ListIcon,
+  // PageIcon,
+  // PieChartIcon,
+  // PlugInIcon,
   TableIcon,
   UserCircleIcon,
-  BellIcon,
-  NotificationBell,
+  // BellIcon,
+  // NotificationBell,
   BoltIcon,
   ChatIcon,
   DocsIcon
 } from "../icons/index";
-import {white_Logo} from "../../public/images/logo/white_logo.png"
+// import {white_Logo} from "../../public/images/logo/white_logo.png"
 
 type NavItem = {
   name: string;

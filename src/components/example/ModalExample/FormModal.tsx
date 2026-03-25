@@ -13,11 +13,7 @@ const EDGE_FUNCTION_URL =
   const ANON_KEY =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmeG1mYWFrdWZybXpjeGh0Z2Z3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk4MTQzMTIsImV4cCI6MjA3NTM5MDMxMn0.qtNn0qXNhn8ol8fTSb2Hp9nQkYfFA2Y_Zec4LuISPZQ";
 
-
-    interface ModalProps {
-  setValue: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
-}
-export default function FormInModal({setValue}:ModalProps) {
+export default function FormModal() {
   const { isOpen, openModal, closeModal } = useModal();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -58,7 +54,6 @@ export default function FormInModal({setValue}:ModalProps) {
       setBody("");
       closeModal();
       alert("Notification sent successfully!");
-      setValue(true)
     } catch (err) {
       console.error("Error:", err);
          let errorMessage = "Something went wrong";

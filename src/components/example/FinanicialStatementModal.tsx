@@ -5,7 +5,7 @@ import ComponentCard from "../common/ComponentCard";
 import Button from "../ui/button/Button";
 import { Modal } from "../ui/modal";
 import Label from "../form/Label";
-import Input from "../form/input/InputField"; // keeping for reference, not used here
+// import Input from "../form/input/InputField"; 
 import { useModal } from "@/hooks/useModal";
 import supabase from "../../../SupabaseConfig";
 import { toast } from "sonner";
@@ -19,12 +19,16 @@ const FINANCIAL_TABS = [
   { value: "LCB", label: "LCB" },
 ];
 
-export default function FinancialStatementModal({ setValue }) {
+interface ModalProps {
+  setValue: (value: boolean) => void;   // or React.Dispatch<React.SetStateAction<boolean>>
+}
+export default function FinancialStatementModal({ setValue }:ModalProps) {
   const { isOpen, openModal, closeModal } = useModal();
 
   const [shortDes, setShortDes] = useState("");
   const [tabTitle, setTabTitle] = useState("");
-  const [pdfFile, setPdfFile] = useState(null);
+  // const [pdfFile, setPdfFile] = useState(null);
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleUpload = async () => {
@@ -49,6 +53,8 @@ export default function FinancialStatementModal({ setValue }) {
         return;
       }
 
+      console.log(uploadData)
+
       const { data: publicUrlData } = supabase.storage
         .from("PDF Files")
         .getPublicUrl(fileName);
@@ -72,7 +78,7 @@ export default function FinancialStatementModal({ setValue }) {
         setShortDes("");
         setTabTitle("");
         setPdfFile(null);
-        setValue((prev) => !prev);
+        setValue(true);
         closeModal();
       }
     } catch (err) {
@@ -162,7 +168,6 @@ export default function FinancialStatementModal({ setValue }) {
             <Button
               variant="outline"
               onClick={closeModal}
-              type="button"
               size="sm"
               disabled={loading}
             >

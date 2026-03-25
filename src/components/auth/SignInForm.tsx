@@ -1,11 +1,11 @@
 "use client";
 
-import Checkbox from "@/components/form/input/Checkbox";
+// import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
-import Link from "next/link";
+import {  EyeCloseIcon, EyeIcon } from "@/icons";
+// import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import supabase from "../../../SupabaseConfig";
 import { useRouter } from "next/navigation";
@@ -49,6 +49,8 @@ export default function SignInForm() {
     });
 
     setLoading(false);
+
+    console.log(data)
 
     if (signInError) {
       let friendlyMessage = "An error occurred during sign in.";
@@ -102,9 +104,8 @@ export default function SignInForm() {
                   <Input
                     placeholder="info@gmail.com"
                     type="email"
-                    value={email}
+                    defaultValue={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
                   />
                 </div>
 
@@ -116,9 +117,8 @@ export default function SignInForm() {
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
-                      value={password}
+                      defaultValue={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      required
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
@@ -161,7 +161,6 @@ export default function SignInForm() {
                   <Button
                     className="w-full"
                     size="sm"
-                    type="submit"
                     disabled={loading}
                   >
                     {loading ? "Signing in..." : "Sign in"}

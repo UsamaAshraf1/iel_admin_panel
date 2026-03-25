@@ -8,9 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import Badge from "../ui/badge/Badge";
+// import Badge from "../ui/badge/Badge";
 import supabase from "../../../SupabaseConfig";
-import { toast } from "sonner"; // Optional: for nice notifications (recommended)
+// import { toast } from "sonner";
 
 interface Profile {
   id: number | string;
@@ -73,7 +73,7 @@ export default function ChatTable() {
     if (profileError) throw profileError;
 
     // 4️⃣ Create email map
-    const emailMap: any = {};
+    const emailMap: Record<string | number, string> = {};
     profileData.forEach((profile) => {
       emailMap[profile.id] = profile.email;
     });
@@ -86,7 +86,7 @@ export default function ChatTable() {
 
     setChatHistory(mergedData);
 
-  } catch (err: any) {
+  } catch (err) {
     console.error("Error fetching chat history:", err);
     setError("Failed to load data. Please try again later.");
   } finally {
