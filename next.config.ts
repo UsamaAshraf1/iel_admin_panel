@@ -3,7 +3,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const basePath = isProd ? '/tailadmin-nextjs' : '';
 const nextConfig: NextConfig = {
   /* config options here */
-  output: 'export',
+  // output: 'export',
   trailingSlash: true,
   basePath: basePath,
   assetPrefix: basePath,
