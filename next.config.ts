@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  trailingSlash: true,
   images: {
-    unoptimized: true
+    unoptimized: true,
   },
   webpack(config) {
     config.module.rules.push({
