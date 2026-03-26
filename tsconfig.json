@@ -39,7 +39,7 @@
     "src/app/(admin)/(others-pages)/(tables)/News/page.jsx",
     "src/app/(admin)/(others-pages)/(tables)/Finanicial_sttaements/page.jsx",
     ".next/dev/types/**/*.ts"
-  ],
+, "next.config.ts"  ],
   "exclude": [
     "node_modules"
   ]
